@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<title>Diagnostická hra</title>
+
+<style>
+body{
+    font-family: Arial;
+    background-image: url("https://tse2.mm.bing.net/th/id/OIP.U6oQaI2EsYJsVr4ZgCA46QHaE8?rs=1&pid=ImgDetMain&o=7&rm=3");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color:white;
+    text-align:center;
+    padding:40px;
+}
+
+h1{
+    background:white;
+    color:black;
+    padding:10px;
+    border-radius:8px;
+    display:inline-block;
+}
+
+.box{
+    background:#2e2e2e;
+    padding:20px;
+    border-radius:10px;
+    width:420px;
+    margin:auto;
+}
+
+button{
+    padding:10px 20px;
+    margin:8px;
+    border:none;
+    border-radius:5px;
+    background:#4CAF50;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#45a049;
+}
+
+#result{
+    font-weight:bold;
+    margin-top:15px;
+}
+.spin{
+    width:150px;
+    animation: otoceni 3s linear infinite;
+}
+
+@keyframes otoceni{
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+
+<script>
+function playMusic(){
+  document.getElementById("music").play();
+}
+</script>
+<h1>🩺 Diagnostická hra</h1>
+<p>Uhodni nemoc podle příznaků.</p>
+
+<div class="box">
+
+<h3>Příznaky pacienta:</h3>
+<p id="symptoms"></p>
+
+<div id="choices"></div>
+
+<p id="result"></p>
+
+<button onclick="newGame()">Nový pacient</button>
+
+</div>
+
+<script>
+
+const cases = [
+
+{symptoms:"horečka, kašel, bolest svalů",answer:"Chřipka",options:["Chřipka","Alergie","Migréna"]},
+
+{symptoms:"silná bolest hlavy, citlivost na světlo",answer:"Migréna",options:["Migréna","Astma","Angína"]},
+
+{symptoms:"svědění očí, kýchání, rýma",answer:"Alergie",options:["Zápal plic","Alergie","Chřipka"]},
+
+{symptoms:"bolest v krku, horečka, potíže s polykáním",answer:"Angína",options:["Angína","Astma","Migréna"]},
+
+{symptoms:"dušnost, sípání při dýchání, kašel",answer:"Astma",options:["Astma","Chřipka","Alergie"]},
+
+{symptoms:"vysoká horečka, silný kašel, bolest na hrudi při dýchání",answer:"Zápal plic",options:["Zápal plic","Angína","Migréna"]},
+
+{symptoms:"silná žízeň, časté močení, únava",answer:"Cukrovka",options:["Cukrovka","Chřipka","Alergie"]},
+
+{symptoms:"bolest břicha v pravém podbřišku, nevolnost, horečka",answer:"Zánět slepého střeva",options:["Zánět slepého střeva","Migréna","Astma"]},
+
+{symptoms:"horečka, bolest hlavy, ztuhlý krk",answer:"Meningitida",options:["Chřipka","Meningitida","Alergie"]},
+
+{symptoms:"dlouhodobý kašel, noční pocení, hubnutí",answer:"Tuberkulóza",options:["Astma","Tuberkulóza","Chřipka"]},
+
+{symptoms:"bolest na hrudi, dušnost, pocení",answer:"Infarkt",options:["Infarkt","Migréna","Angína"]},
+
+{symptoms:"silná bolest zubu, otok dásně",answer:"Zánět zubu",options:["Zánět zubu","Chřipka","Astma"]},
+
+{symptoms:"bolest žaludku, pálení žáhy, nevolnost",answer:"Gastritida",options:["Migréna","Gastritida","Alergie"]},
+
+{symptoms:"vyrážka, horečka, únava",answer:"Spalničky",options:["Spalničky","Chřipka","Astma"]},
+
+{symptoms:"bolest ucha, zhoršený sluch, horečka",answer:"Zánět středního ucha",options:["Migréna","Zánět středního ucha","Angína"]},
+
+{symptoms:"bolest kloubů, otok, ztuhlost ráno",answer:"Artritida",options:["Artritida","Chřipka","Alergie"]},
+
+{symptoms:"silná únava, bolest v krku, zvětšené uzliny",answer:"Mononukleóza",options:["Mononukleóza","Chřipka","Migréna"]},
+
+{symptoms:"kašel, ztráta chuti a čichu, horečka",answer:"COVID-19",options:["Chřipka","COVID-19","Astma"]},
+
+{symptoms:"bolest zad, potíže při močení, horečka",answer:"Zánět ledvin",options:["Zánět ledvin","Migréna","Angína"]},
+
+{symptoms:"silné svědění kůže, červené pupínky",answer:"Kopřivka",options:["Kopřivka","Astma","Chřipka"]}
+
+];
+
+let currentCase;
+
+function newGame(){
+
+currentCase = cases[Math.floor(Math.random()*cases.length)];
+
+document.getElementById("symptoms").innerText = currentCase.symptoms;
+
+const choicesDiv = document.getElementById("choices");
+choicesDiv.innerHTML="";
+
+currentCase.options.forEach(option=>{
+let btn=document.createElement("button");
+btn.innerText=option;
+btn.onclick=()=>checkAnswer(option);
+choicesDiv.appendChild(btn);
+});
+
+document.getElementById("result").innerText="";
+}
+
+function checkAnswer(choice){
+
+if(choice===currentCase.answer){
+document.getElementById("result").innerText="✅ Správně! Diagnóza potvrzena.";
+}else{
+document.getElementById("result").innerText="❌ Špatně! Zkus to znovu.";
+}
+
+}
+
+newGame();
+
+</script>
+<br>
+<img src="https://tse4.mm.bing.net/th/id/OIP.JErTxs3BSCkX5iL4v52QzwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" class="spin">
+<br>
+<br>
+<center><button onclick="playMusic()">Zapnout hudbu</button>
+
+<audio id="music" loop>
+  <source src="haus.mp3.mp3" type="audio/mpeg">
+</audio>
+</center>
+</body>
+</html>
